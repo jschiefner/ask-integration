@@ -1,0 +1,22 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Speak ask-integration'
+      'command': 'ask-integration:speak'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'ask-integration'
+      'submenu': [
+        {
+          'label': 'Speak'
+          'command': 'ask-integration:speak'
+        }
+      ]
+    ]
+  }
+]
