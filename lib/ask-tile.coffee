@@ -7,8 +7,8 @@ class AskTile
 
     # Create image element
     image = document.createElement('img')
-    image.src = 'atom://ask-integration/lib/alexa-logo.png'
-    image.height = '10'
+    image.src = 'atom://ask-integration/lib/alexa-logo.svg'
+    image.height = '12'
     image.className = 'icon'
     @element.appendChild(image)
 
