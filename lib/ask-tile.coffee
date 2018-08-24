@@ -4,12 +4,12 @@ class AskTile
     # Create root element
     @element = document.createElement('span')
     @element.classList.add('ask-tile')
+    @element.classList.add('inline-block')
 
     # Create image element
     image = document.createElement('img')
     image.src = 'atom://ask-integration/lib/alexa-logo.svg'
-    image.height = '12'
-    image.className = 'icon'
+    image.className = 'ask-icon'
     @element.appendChild(image)
 
     # Create message element
