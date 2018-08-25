@@ -1,11 +1,5 @@
 # See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
 'context-menu':
-  'atom-text-editor': [
-    {
-      'label': 'Deploy Alexa Skill'
-      'command': 'ask-integration:deploy'
-    }
-  ]
   '.ask-tile': [
     {
       'label': 'Deploy',
@@ -16,18 +10,22 @@
     }
     {
       'label': 'Deploy Lambda'
+      'command': 'ask-integration:deployLambda'
     }
     {
       'label': 'Deploy Model'
+      'command': 'ask-integration:deployModel'
     }
     {
       'type': 'separator'
     }
     {
       'label': 'Force Deploy Lambda'
+      'command': 'ask-integration:forceDeployLambda'
     }
     {
       'label': 'Force Deploy Model'
+      'command': 'ask-integration:forceDeployModel'
     }
   ]
 'menu': [
@@ -37,8 +35,30 @@
       'label': 'Ask Integration'
       'submenu': [
         {
-          'label': 'Deploy'
+          'label': 'Deploy',
           'command': 'ask-integration:deploy'
+        }
+        {
+          'type': 'separator'
+        }
+        {
+          'label': 'Deploy Lambda'
+          'command': 'ask-integration:deployLambda'
+        }
+        {
+          'label': 'Deploy Model'
+          'command': 'ask-integration:deployModel'
+        }
+        {
+          'type': 'separator'
+        }
+        {
+          'label': 'Force Deploy Lambda'
+          'command': 'ask-integration:forceDeployLambda'
+        }
+        {
+          'label': 'Force Deploy Model'
+          'command': 'ask-integration:forceDeployModel'
         }
       ]
     ]

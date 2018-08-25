@@ -16,12 +16,18 @@ module.exports = AskIntegration =
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
-    # Register command that deploys (for now)
+    # Register commands
     @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deploy': => @deploy()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deployLambda': => @deployLambda()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deployModel': => @deployModel()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:forceDeployLambda': => @forceDeployLambda()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:forceDeployModel': => @forceDeployModel()
+
+    # register checking for .ask Folder on every editor change
     @subscriptions.add atom.workspace.onDidChangeActiveTextEditor () => @checkAskFolder()
 
   consumeStatusBar: (statusBar) ->
-    @statusBarTile = statusBar.addRightTile(item: @askTile.getElement(), visible: true, priority: 100)
+    @statusBarTile = statusBar.addRightTile item: @askTile.getElement(), visible: true, priority: 100
 
   deactivate: ->
     @subscriptions.dispose()
@@ -31,16 +37,25 @@ module.exports = AskIntegration =
   serialize: ->
     # askTileState: @askTile.serialize()
 
-  deploy: ->
-    console.log 'deployment started'
-    exec "cd #{@rootPath()}; ask deploy -t lambda | tail", (err, stdout, stderr) =>
+  deploy: (options = {}) ->
+    cmd = "cd #{@rootPath()}; ask deploy" # always navigate to project directory before executing ask deploy
+    description = 'Model and lambda were';
+    if options.force
+      cmd += ' --force'
+    if options.target
+      cmd += " -t #{options.target}"
+      description = "#{options.target} was"
+    description += if options.force then ' force deployed' else ' sucessfully deployed'
+    atom.notifications.addInfo cmd
+    atom.notifications.addSucess description
+    exec cmd, (err, stdout, stderr) =>
       console.log "err: #{err}"
       console.log "stdout: #{stdout}"
       console.log "stderr: #{stderr} #{!!stderr}"
-      if stderr
-        atom.notifications.addError stderr
+      unless stderr
+        atom.notifications.addSuccess 'Deployment successfull', description: description
       else
-        atom.notifications.addSuccess 'Deployment successfull', description: 'Model and Lambda were sucessfully deployed'
+        atom.notifications.addError stderr
 
   checkAskFolder: ->
     if new Directory(@rootPath('/.ask/')).existsSync()
@@ -53,3 +68,15 @@ module.exports = AskIntegration =
   rootPath: (path) ->
     output = atom.project.relativizePath(atom.workspace.getActiveTextEditor()?.getPath())[0]
     if path then output + path else output
+
+  deployLambda: ->
+    @deploy target: 'lambda'
+
+  deployModel: ->
+    @deploy target: 'model'
+
+  forceDeployLambda: ->
+    @deploy target: 'lambda', force: true
+
+  forceDeployModel: ->
+    @deploy target: 'model', force: true
