@@ -4,6 +4,12 @@
   "version": "0.0.0",
   "description": "Integrates the Alexa Skill Kit (ASK) CLI Commands into Atom. The ASK CLI is necessary for this package.",
   "keywords": [
+    "alexa",
+    "skill",
+    "alexa skill kit",
+    "ask",
+    "ask-cli",
+    "alexa-skill-kit"
   ],
   "consumedServices": {
     "status-bar": {
@@ -17,6 +23,7 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
+  "readmeFilename": "README.md",
   "dependencies": {
   }
 }
