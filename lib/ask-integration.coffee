@@ -60,9 +60,6 @@ module.exports = AskIntegration =
 
     # when all preparations are done, execute the ask command
     exec cmd, (err, stdout, stderr) =>
-      console.log "err: #{err}"
-      console.log "stdout: #{stdout}"
-      console.log "stderr: #{stderr} #{!!stderr}"
       unless stderr
         atom.notifications.addSuccess 'Deployment successfull', description: description
       else
