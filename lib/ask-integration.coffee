@@ -81,7 +81,21 @@ module.exports = AskIntegration =
       unless stderr
         atom.notifications.addSuccess 'Deployment successfull', description: description
       else
-        atom.notifications.addError stderr
+        if stderr.includes('Lambda update failed') || stderr.includes('eTag does not match')
+          atom.notifications.addError stderr, dismissable: true,
+          description: 'You might want to force deploy. Please proceed with caution.',
+          buttons: [{
+            onDidClick: =>
+              @forceDeployLambda()
+            text: 'Force Deploy Lambda'
+          },
+          {
+            onDidClick: =>
+              @forceDeployModel()
+            text: 'Force Deploy Model'
+          }]
+        else
+          atom.notifications.addError stderr, description: "The current directory #{@rootPath()} doesn't seem to be a valid ask folder.", dismissable: true
 
       # when everything is done stop the rotation
       @askTile.rotate false
