@@ -45,7 +45,7 @@ module.exports = AskIntegration =
     customCommand = atom.config.get 'ask-integration.customCommand'
     cmd += " #{customCommand} &&" unless customCommand == 'none'
 
-    # built command and the notification description with force and target options
+    # build command and the notification description with force and target options
     cmd += ' ask deploy'
     description = 'Model and lambda were'
     if options.force
@@ -55,8 +55,7 @@ module.exports = AskIntegration =
       description = "#{options.target} was"
     description += if options.force then ' force deployed' else ' sucessfully deployed'
 
-    atom.notifications.addInfo cmd
-    atom.notifications.addSuccess description
+    # when all preparations are done, execute the ask command
     exec cmd, (err, stdout, stderr) =>
       console.log "err: #{err}"
       console.log "stdout: #{stdout}"
