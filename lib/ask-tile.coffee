@@ -1,6 +1,6 @@
 module.exports =
 class AskTile
-  constructor: (deploy) ->
+  constructor: (askClick) ->
     # Create root element
     @element = document.createElement('span')
     @element.classList.add('ask-tile')
@@ -17,7 +17,7 @@ class AskTile
     message.textContent = "Ask"
     message.classList.add('message')
     @element.appendChild(message)
-    @element.addEventListener 'click', deploy
+    @element.addEventListener 'click', askClick
 
   # Returns an object that can be retrieved when package is activated
   # serialize: ->

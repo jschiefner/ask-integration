@@ -10,7 +10,7 @@ module.exports = AskIntegration =
 
   activate: (state) ->
     # create the AskTile
-    @askTile = new AskTile () => @deploy()
+    @askTile = new AskTile () => @askClick()
     @askTile.hide() unless @checkAskFolder()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
@@ -47,7 +47,7 @@ module.exports = AskIntegration =
       description = "#{options.target} was"
     description += if options.force then ' force deployed' else ' sucessfully deployed'
     atom.notifications.addInfo cmd
-    atom.notifications.addSucess description
+    atom.notifications.addSuccess description
     exec cmd, (err, stdout, stderr) =>
       console.log "err: #{err}"
       console.log "stdout: #{stdout}"
@@ -56,6 +56,15 @@ module.exports = AskIntegration =
         atom.notifications.addSuccess 'Deployment successfull', description: description
       else
         atom.notifications.addError stderr
+
+  askClick: ->
+    switch atom.config.get 'ask-integration.clickAction'
+      when 'deploy'
+        @deploy()
+      when 'deployLambda'
+        @deployLambda()
+      when 'deployModel'
+        @deployModel()
 
   checkAskFolder: ->
     if new Directory(@rootPath('/.ask/')).existsSync()
@@ -80,3 +89,16 @@ module.exports = AskIntegration =
 
   forceDeployModel: ->
     @deploy target: 'model', force: true
+
+  config:
+    clickAction:
+      title: 'Default Action'
+      description: 'You can choose which deployment should be performed by default when clicking the Ask Button in the status bar'
+      type: 'string'
+      default: 'none'
+      enum: [
+        {value: 'deploy', description: 'Deploy'}
+        {value: 'deployLambda', description: 'Deploy Lambda'}
+        {value: 'deployModel', description: 'Deploy Model'}
+      ]
+      default: 'deploy'
