@@ -7,10 +7,10 @@ class AskTile
     @element.classList.add('inline-block')
 
     # Create image element
-    image = document.createElement('img')
-    image.src = 'atom://ask-integration/lib/alexa-logo.svg'
-    image.className = 'ask-icon'
-    @element.appendChild(image)
+    @image = document.createElement('img')
+    @image.src = 'atom://ask-integration/lib/alexa-logo.svg'
+    @image.className = 'ask-icon'
+    @element.appendChild(@image)
 
     # Create message element
     message = document.createElement('span')
@@ -31,6 +31,9 @@ class AskTile
 
   show: ->
     @element.style = ''
+
+  loading: ->
+    # @image.src = 'atom://ask-integration/lib/alexa-refresh.gif'
 
   getElement: ->
     @element
