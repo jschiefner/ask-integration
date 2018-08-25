@@ -32,8 +32,12 @@ class AskTile
   show: ->
     @element.style = ''
 
-  loading: ->
-    # @image.src = 'atom://ask-integration/lib/alexa-refresh.gif'
+  rotate: (rotation) ->
+    if rotation
+      @image.classList.add 'rotating'
+    else
+      @image.addEventListener 'animationiteration', () =>
+        @image.classList.remove 'rotating'
 
   getElement: ->
     @element

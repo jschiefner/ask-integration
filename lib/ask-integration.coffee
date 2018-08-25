@@ -38,6 +38,9 @@ module.exports = AskIntegration =
     # askTileState: @askTile.serialize()
 
   deploy: (options = {}) ->
+    # start rotating Alexa Logo
+    @askTile.rotate true
+
      # always navigate to project directory before executing ask deploy
     cmd = "cd #{@rootPath()} &&"
 
@@ -64,6 +67,9 @@ module.exports = AskIntegration =
         atom.notifications.addSuccess 'Deployment successfull', description: description
       else
         atom.notifications.addError stderr
+
+      # when everything is done stop the rotation
+      @askTile.rotate false
 
   askClick: ->
     switch atom.config.get 'ask-integration.clickAction'

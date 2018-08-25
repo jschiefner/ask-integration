@@ -4,12 +4,21 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
-.ask-tile {
-
-}
-
 .ask-tile .ask-icon {
   height: 14px;
   margin-top: -2px;
-  margin-right: 4px;
+  margin-right: 5px;
+}
+
+.rotating {
+  animation: rotating 1.3s infinite
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
