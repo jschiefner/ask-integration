@@ -8,6 +8,24 @@ module.exports = AskIntegration =
   askTile: null
   statusBarTile: null
 
+  config:
+    customCommand:
+      type: 'string'
+      title: 'Custom Command'
+      description: 'You can set an optional Command, that will be executed from the Project Directory before deployment'
+      default: 'none'
+    clickAction:
+      title: 'Default Action'
+      description: 'You can choose which deployment should be performed by default when clicking the Ask Button in the status bar'
+      type: 'string'
+      default: 'none'
+      enum: [
+        {value: 'deploy', description: 'Deploy'}
+        {value: 'deployLambda', description: 'Deploy Lambda'}
+        {value: 'deployModel', description: 'Deploy Model'}
+      ]
+      default: 'deploy'
+
   activate: (state) ->
     # create the AskTile
     @askTile = new AskTile (event) => @askClick(event)
@@ -104,21 +122,3 @@ module.exports = AskIntegration =
 
   forceDeployModel: ->
     @deploy target: 'model', force: true
-
-  config:
-    customCommand:
-      type: 'string'
-      title: 'Custom Command'
-      description: 'You can set an optional Command, that will be executed from the Project Directory before deployment'
-      default: 'none'
-    clickAction:
-      title: 'Default Action'
-      description: 'You can choose which deployment should be performed by default when clicking the Ask Button in the status bar'
-      type: 'string'
-      default: 'none'
-      enum: [
-        {value: 'deploy', description: 'Deploy'}
-        {value: 'deployLambda', description: 'Deploy Lambda'}
-        {value: 'deployModel', description: 'Deploy Model'}
-      ]
-      default: 'deploy'
