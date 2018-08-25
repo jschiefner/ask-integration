@@ -36,8 +36,7 @@ class AskTile
     if rotation
       @image.classList.add 'rotating'
     else
-      @image.addEventListener 'animationiteration', () =>
-        @image.classList.remove 'rotating'
+      @image.addEventListener 'animationiteration', (() => @image.classList.remove 'rotating'), once: true
 
   getElement: ->
     @element
