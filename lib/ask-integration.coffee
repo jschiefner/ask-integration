@@ -10,7 +10,7 @@ module.exports = AskIntegration =
 
   activate: (state) ->
     # create the AskTile
-    @askTile = new AskTile () => @askClick()
+    @askTile = new AskTile (event) => @askClick(event)
     @askTile.hide() unless @checkAskFolder()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
@@ -68,8 +68,12 @@ module.exports = AskIntegration =
       # when everything is done stop the rotation
       @askTile.rotate false
 
-  askClick: ->
-    switch atom.config.get 'ask-integration.clickAction'
+  askClick: (event) ->
+    action = atom.config.get 'ask-integration.clickAction'
+    action = 'deployLambda' if event.altKey
+    action = 'deployModel' if event.shiftKey
+
+    switch action
       when 'deploy'
         @deploy()
       when 'deployLambda'
