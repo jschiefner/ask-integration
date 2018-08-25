@@ -6,6 +6,30 @@
       'command': 'ask-integration:deploy'
     }
   ]
+  '.ask-tile': [
+    {
+      'label': 'Deploy',
+      'command': 'ask-integration:deploy'
+    }
+    {
+      'type': 'separator'
+    }
+    {
+      'label': 'Deploy Lambda'
+    }
+    {
+      'label': 'Deploy Model'
+    }
+    {
+      'type': 'separator'
+    }
+    {
+      'label': 'Force Deploy Lambda'
+    }
+    {
+      'label': 'Force Deploy Model'
+    }
+  ]
 'menu': [
   {
     'label': 'Packages'
