@@ -10,22 +10,22 @@
     }
     {
       'label': 'Deploy Lambda'
-      'command': 'ask-integration:deployLambda'
+      'command': 'ask-integration:deploy-lambda'
     }
     {
       'label': 'Deploy Model'
-      'command': 'ask-integration:deployModel'
+      'command': 'ask-integration:deploy-model'
     }
     {
       'type': 'separator'
     }
     {
       'label': 'Force Deploy Lambda'
-      'command': 'ask-integration:forceDeployLambda'
+      'command': 'ask-integration:force-deploy-lambda'
     }
     {
       'label': 'Force Deploy Model'
-      'command': 'ask-integration:forceDeployModel'
+      'command': 'ask-integration:force-deploy-model'
     }
   ]
 'menu': [
@@ -43,22 +43,22 @@
         }
         {
           'label': 'Deploy Lambda'
-          'command': 'ask-integration:deployLambda'
+          'command': 'ask-integration:deploy-lambda'
         }
         {
           'label': 'Deploy Model'
-          'command': 'ask-integration:deployModel'
+          'command': 'ask-integration:deploy-model'
         }
         {
           'type': 'separator'
         }
         {
           'label': 'Force Deploy Lambda'
-          'command': 'ask-integration:forceDeployLambda'
+          'command': 'ask-integration:force-deploy-lambda'
         }
         {
           'label': 'Force Deploy Model'
-          'command': 'ask-integration:forceDeployModel'
+          'command': 'ask-integration:force-deploy-model'
         }
       ]
     ]

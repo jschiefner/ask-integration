@@ -18,10 +18,10 @@ module.exports = AskIntegration =
 
     # Register commands
     @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deploy': => @deploy()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deployLambda': => @deployLambda()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deployModel': => @deployModel()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:forceDeployLambda': => @forceDeployLambda()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:forceDeployModel': => @forceDeployModel()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deploy-lambda': => @deployLambda()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deploy-model': => @deployModel()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:force-deploy-lambda': => @forceDeployLambda()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:force-deploy-model': => @forceDeployModel()
 
     # register checking for .ask Folder on every editor change
     @subscriptions.add atom.workspace.onDidChangeActiveTextEditor () => @checkAskFolder()
