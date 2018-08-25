@@ -46,7 +46,7 @@ module.exports = AskIntegration =
 
     # add custom command if the user defined one
     customCommand = atom.config.get 'ask-integration.customCommand'
-    cmd += " #{customCommand} &&" unless customCommand == 'none'
+    cmd += " #{customCommand};" unless customCommand == 'none'
 
     # build command and the notification description with force and target options
     cmd += ' ask deploy'
