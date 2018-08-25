@@ -32,16 +32,24 @@ module.exports = AskIntegration =
     # askTileState: @askTile.serialize()
 
   deploy: ->
-    exec 'pwd', (err, stdout, stderr) =>
-      console.log stdout
+    console.log 'deployment started'
+    exec "cd #{@rootPath()}; ask deploy -t lambda | tail", (err, stdout, stderr) =>
+      console.log "err: #{err}"
+      console.log "stdout: #{stdout}"
+      console.log "stderr: #{stderr} #{!!stderr}"
+      if stderr
+        atom.notifications.addError stderr
+      else
+        atom.notifications.addSuccess 'Deployment successfull', description: 'Model and Lambda were sucessfully deployed'
 
   checkAskFolder: ->
-    if new Directory(@askDirPath()).existsSync()
+    if new Directory(@rootPath('/.ask/')).existsSync()
       @askTile.show()
       true
     else
       @askTile.hide()
       false
 
-  askDirPath: ->
-    atom.project.relativizePath(atom.workspace.getActiveTextEditor()?.getPath())[0] + '/.ask/'
+  rootPath: (path) ->
+    output = atom.project.relativizePath(atom.workspace.getActiveTextEditor()?.getPath())[0]
+    if path then output + path else output
