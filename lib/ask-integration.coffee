@@ -38,14 +38,23 @@ module.exports = AskIntegration =
     # askTileState: @askTile.serialize()
 
   deploy: (options = {}) ->
-    cmd = "cd #{@rootPath()}; ask deploy" # always navigate to project directory before executing ask deploy
-    description = 'Model and lambda were';
+     # always navigate to project directory before executing ask deploy
+    cmd = "cd #{@rootPath()} &&"
+
+    # add custom command if the user defined one
+    customCommand = atom.config.get 'ask-integration.customCommand'
+    cmd += " #{customCommand} &&" unless customCommand == 'none'
+
+    # built command and the notification description with force and target options
+    cmd += ' ask deploy'
+    description = 'Model and lambda were'
     if options.force
       cmd += ' --force'
     if options.target
       cmd += " -t #{options.target}"
       description = "#{options.target} was"
     description += if options.force then ' force deployed' else ' sucessfully deployed'
+
     atom.notifications.addInfo cmd
     atom.notifications.addSuccess description
     exec cmd, (err, stdout, stderr) =>
@@ -91,6 +100,11 @@ module.exports = AskIntegration =
     @deploy target: 'model', force: true
 
   config:
+    customCommand:
+      type: 'string'
+      title: 'Custom Command'
+      description: 'You can set an optional Command, that will be executed from the Project Directory before deployment'
+      default: 'none'
     clickAction:
       title: 'Default Action'
       description: 'You can choose which deployment should be performed by default when clicking the Ask Button in the status bar'
