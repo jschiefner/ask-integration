@@ -12,7 +12,7 @@ describe "AskIntegration", ->
     workspaceElement = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('ask-integration')
 
-  describe "when the ask-integration:speak event is triggered", ->
+  describe "when the ask-integration:deploy event is triggered", ->
     it "hides and shows the modal panel", ->
       # Before the activation event the view is not on the DOM, and no panel
       # has been created
@@ -20,7 +20,7 @@ describe "AskIntegration", ->
 
       # This is an activation event, triggering it will cause the package to be
       # activated.
-      atom.commands.dispatch workspaceElement, 'ask-integration:speak'
+      atom.commands.dispatch workspaceElement, 'ask-integration:deploy'
 
       waitsForPromise ->
         activationPromise
@@ -33,7 +33,7 @@ describe "AskIntegration", ->
 
         askIntegrationPanel = atom.workspace.panelForItem(askIntegrationElement)
         expect(askIntegrationPanel.isVisible()).toBe true
-        atom.commands.dispatch workspaceElement, 'ask-integration:speak'
+        atom.commands.dispatch workspaceElement, 'ask-integration:deploy'
         expect(askIntegrationPanel.isVisible()).toBe false
 
     it "hides and shows the view", ->
@@ -49,7 +49,7 @@ describe "AskIntegration", ->
 
       # This is an activation event, triggering it causes the package to be
       # activated.
-      atom.commands.dispatch workspaceElement, 'ask-integration:speak'
+      atom.commands.dispatch workspaceElement, 'ask-integration:deploy'
 
       waitsForPromise ->
         activationPromise
@@ -58,5 +58,5 @@ describe "AskIntegration", ->
         # Now we can test for view visibility
         askIntegrationElement = workspaceElement.querySelector('.ask-integration')
         expect(askIntegrationElement).toBeVisible()
-        atom.commands.dispatch workspaceElement, 'ask-integration:speak'
+        atom.commands.dispatch workspaceElement, 'ask-integration:deploy'
         expect(askIntegrationElement).not.toBeVisible()

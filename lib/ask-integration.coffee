@@ -10,14 +10,14 @@ module.exports = AskIntegration =
 
   activate: (state) ->
     # create the AskTile
-    @askTile = new AskTile () => @speak()
+    @askTile = new AskTile () => @deploy()
     @askTile.hide() unless @checkAskFolder()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
-    # Register command that speaks (for now)
-    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:speak': => @speak()
+    # Register command that deploys (for now)
+    @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:deploy': => @deploy()
     @subscriptions.add atom.workspace.onDidChangeActiveTextEditor () => @checkAskFolder()
 
   consumeStatusBar: (statusBar) ->
@@ -31,15 +31,17 @@ module.exports = AskIntegration =
   serialize: ->
     # askTileState: @askTile.serialize()
 
-  speak: ->
-    exec('say ask integration')
+  deploy: ->
+    exec 'pwd', (err, stdout, stderr) =>
+      console.log stdout
 
   checkAskFolder: ->
-    askDirPath = atom.project.relativizePath(atom.workspace.getActiveTextEditor()?.getPath())[0] + '/.ask/'
-    dir = new Directory askDirPath
-    if dir.existsSync()
+    if new Directory(@askDirPath()).existsSync()
       @askTile.show()
       true
     else
       @askTile.hide()
       false
+
+  askDirPath: ->
+    atom.project.relativizePath(atom.workspace.getActiveTextEditor()?.getPath())[0] + '/.ask/'

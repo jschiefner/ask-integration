@@ -2,19 +2,19 @@
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Speak ask-integration'
-      'command': 'ask-integration:speak'
+      'label': 'Deploy Alexa Skill'
+      'command': 'ask-integration:deploy'
     }
   ]
 'menu': [
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'ask-integration'
+      'label': 'Ask Integration'
       'submenu': [
         {
-          'label': 'Speak'
-          'command': 'ask-integration:speak'
+          'label': 'Deploy'
+          'command': 'ask-integration:deploy'
         }
       ]
     ]
