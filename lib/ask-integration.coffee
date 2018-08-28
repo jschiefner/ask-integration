@@ -92,8 +92,12 @@ module.exports = AskIntegration =
       unless err || stderr
         atom.notifications.addSuccess 'Deployment successfull', description: description
       else
-        if stderr.includes('Lambda update failed') || stderr.includes('eTag does not match')
-          atom.notifications.addError stderr, dismissable: true,
+        # parse error, model error goes to stdout, lambda error goes to stderr
+        error = unless stderr == '' then stderr else stdout.substring(stdout.indexOf('[Error]:'))
+
+        # now we have a more reliable error variable
+        if error.includes('Lambda update failed') || error.includes('eTag does not match')
+          atom.notifications.addError error, dismissable: true,
           description: 'You might want to force deploy. Please proceed with caution.',
           buttons: [{
             onDidClick: =>
@@ -106,7 +110,7 @@ module.exports = AskIntegration =
             text: 'Force Deploy Model'
           }]
         else
-          atom.notifications.addError stderr, description: "The current directory #{@rootPath()} doesn't seem to be a valid ask folder.", dismissable: true
+          atom.notifications.addError error, description: "The current directory #{@rootPath()} doesn't seem to be a valid ask folder.", dismissable: true
 
       # when everything is done stop the rotation and reset the tooltip
       @askTile.rotate false
