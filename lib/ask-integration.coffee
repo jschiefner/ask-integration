@@ -7,6 +7,7 @@ module.exports = AskIntegration =
   subscriptions: null
   askTile: null
   statusBarTile: null
+  tooltip: null
 
   config:
     customCommand:
@@ -41,6 +42,9 @@ module.exports = AskIntegration =
     @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:force-deploy-lambda': => @forceDeployLambda()
     @subscriptions.add atom.commands.add 'atom-workspace', 'ask-integration:force-deploy-model': => @forceDeployModel()
 
+    # register tooltip
+    @registerTooltip()
+
     # register checking for .ask Folder on every editor change
     @subscriptions.add atom.workspace.onDidChangeActiveTextEditor () => @checkAskFolder()
 
@@ -49,6 +53,8 @@ module.exports = AskIntegration =
 
   deactivate: ->
     @subscriptions.dispose()
+    @tooltip?.dispose()
+    @tooltip = null
     @statusBarTile?.destroy()
     @statusBarTile = null
 
@@ -69,16 +75,21 @@ module.exports = AskIntegration =
     # build command and the notification description with force and target options
     cmd += ' ask deploy'
     description = 'Model and lambda were'
+    tooltipTitle = 'Deploying...'
     if options.force
       cmd += ' --force'
     if options.target
       cmd += " -t #{options.target}"
       description = "#{options.target} was"
+      tooltipTitle = "Deploying #{options.target}..."
     description += if options.force then ' force deployed' else ' sucessfully deployed'
+
+    # set the tooltip title to deploying [lambda/model]...
+    @registerTooltip tooltipTitle
 
     # when all preparations are done, execute the ask command
     exec cmd, (err, stdout, stderr) =>
-      unless stderr
+      unless err || stderr
         atom.notifications.addSuccess 'Deployment successfull', description: description
       else
         if stderr.includes('Lambda update failed') || stderr.includes('eTag does not match')
@@ -97,8 +108,13 @@ module.exports = AskIntegration =
         else
           atom.notifications.addError stderr, description: "The current directory #{@rootPath()} doesn't seem to be a valid ask folder.", dismissable: true
 
-      # when everything is done stop the rotation
+      # when everything is done stop the rotation and reset the tooltip
       @askTile.rotate false
+      @registerTooltip()
+
+  registerTooltip: (title) ->
+    @tooltip?.dispose()
+    @tooltip = atom.tooltips.add @askTile.getElement(), title: (if title then title else 'Click to deploy. Right click for more options')
 
   askClick: (event) ->
     action = atom.config.get 'ask-integration.clickAction'
