@@ -2,14 +2,18 @@
   "name": "ask-integration",
   "main": "./lib/ask-integration",
   "version": "0.0.0",
-  "description": "Integrates the Alexa Skill Kit (ASK) CLI Commands into Atom. The ASK CLI is necessary for this package.",
+  "description": "Integrates the Alexa Skill Kit (ASK) CLI Commands into Atom",
   "keywords": [
     "alexa",
     "skill",
-    "alexa skill kit",
+    "kit",
     "ask",
+    "cli",
     "ask-cli",
-    "alexa-skill-kit"
+    "statusbar",
+    "integration",
+    "aws",
+    "amazon"
   ],
   "consumedServices": {
     "status-bar": {
@@ -24,6 +28,5 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "readmeFilename": "README.md",
-  "dependencies": {
-  }
+  "dependencies": {}
 }

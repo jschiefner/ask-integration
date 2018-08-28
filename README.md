@@ -12,7 +12,7 @@ This Package integrates the `ask deploy` command into the Atom Status Bar. It al
 
 You can also right-click the Ask Button to see all these options. Here you can also force deploy in case you need to overwrite changes you made to your skill online.
 
-In the package Settings you can also enter a custom command you need to execute before deployment, such as transpiling your code. The command will run in the background from the project directory and it is not checked if it is executed successfully or not so make sure it works. You can execute multiple commands by seperating them with a `;`
+In the package Settings you can also enter a custom command you need to execute before deployment, such as transpiling your code. The command will run in the background from the project directory and it is not checked if it is executed successfully or not so make sure it works. You can execute multiple commands by separating them with a `;`
 
 You can also set the default deploy action. This only applies to clicking the Ask button, the `ask-integration:deploy` command will always deploy the whole skill.
 
