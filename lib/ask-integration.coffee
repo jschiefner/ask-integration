@@ -97,16 +97,18 @@ module.exports = AskIntegration =
 
         # now we have a more reliable error variable
         if error.includes('Lambda update failed') || error.includes('eTag does not match')
-          atom.notifications.addError error, dismissable: true,
+          notification = atom.notifications.addError error, dismissable: true,
           description: 'You might want to force deploy. Please proceed with caution.',
           buttons: [{
             onDidClick: =>
               @forceDeployLambda()
+              notification.dismiss()
             text: 'Force Deploy Lambda'
           },
           {
             onDidClick: =>
               @forceDeployModel()
+              notification.dismiss()
             text: 'Force Deploy Model'
           }]
         else
