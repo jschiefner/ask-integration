@@ -112,7 +112,10 @@ module.exports = AskIntegration =
             text: 'Force Deploy Model'
           }]
         else
-          atom.notifications.addError error, description: "The current directory #{@rootPath()} doesn't seem to be a valid ask folder.", dismissable: true
+          atom.notifications.addError 'An error occured:', detail: error, description: 'There might be more details in the console', dismissable: true
+          console.error "error: #{error}"
+          console.log "stdout: #{stdout}"
+          console.error "stderr: #{stderr}"
 
       # when everything is done stop the rotation and reset the tooltip
       @askTile.rotate false
