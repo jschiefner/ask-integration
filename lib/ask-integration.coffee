@@ -1,4 +1,3 @@
-util = require 'util'
 { exec } = require('child_process')
 AskTile = require './ask-tile'
 {CompositeDisposable, Directory} = require 'atom'
