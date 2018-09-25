@@ -57,9 +57,6 @@ module.exports = AskIntegration =
     @statusBarTile?.destroy()
     @statusBarTile = null
 
-  serialize: ->
-    # askTileState: @askTile.serialize()
-
   deploy: (options = {}) ->
     # start rotating Alexa Logo
     @askTile.rotate true
