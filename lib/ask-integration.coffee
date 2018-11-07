@@ -1,6 +1,6 @@
-{ exec } = require('child_process')
+{ exec } = require 'child_process'
 AskTile = require './ask-tile'
-{CompositeDisposable, Directory} = require 'atom'
+{ CompositeDisposable, Directory } = require 'atom'
 
 module.exports = AskIntegration =
   subscriptions: null
@@ -119,7 +119,7 @@ module.exports = AskIntegration =
 
   registerTooltip: (title) ->
     @tooltip?.dispose()
-    @tooltip = atom.tooltips.add @askTile.getElement(), title: (if title then title else 'Click to deploy. Right click for more options')
+    @tooltip = atom.tooltips.add @askTile.getElement(), title: (if title then title else 'Click to deploy<br>Right click for more options')
 
   askClick: (event) ->
     action = atom.config.get 'ask-integration.clickAction'
